@@ -1,23 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { NavLink, useNavigate, Routes, Route } from "react-router-dom";
+import { Button, Flex } from "@chakra-ui/react";
+import Home from "./componentes/Home/Home";
+import NoticiasHome from "./componentes/NoticiasHome/NoticiasHome";
+import Noticias from "./componentes/Noticias/Noticias";
+import NotFound from "./componentes/NotFound/NotFound";
+import "./App.css";
 
 function App() {
+  const navigate = useNavigate();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <nav className="navigation">
+        <Button className="navigation__link" onClick={() => navigate(-1)}>
+          Atrás
+        </Button>
+        <Flex
+          justifyContent="space-between"
+          width="60%"
+          maxWidth="500px"
+          align-items="center"
         >
-          Learn React
-        </a>
-      </header>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/noticias" end>
+            Noticias
+          </NavLink>
+          <NavLink to="/noticias/sport">Deportes</NavLink>
+          <NavLink to="/noticias/economics">Economía</NavLink>
+          <NavLink to="/noticias/tech">Tecnología</NavLink>
+        </Flex>
+        <Button className="navigation__link" onClick={() => navigate(1)}>
+          Adelante
+        </Button>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home></Home>}></Route>
+        <Route path="/noticias" element={<NoticiasHome></NoticiasHome>}></Route>
+        <Route path="/noticias/:topics" element={<Noticias></Noticias>}></Route>
+        <Route path="*" element={<NotFound></NotFound>}></Route>
+      </Routes>
     </div>
   );
 }
